@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./bashboard.css">
+</head>
+
+<body onload="welcome()" >
+   
+     
+      
+      <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      
+    <section id="mainContent" class="shadow">
+        <h1>dashboard</h1>
+    <div id="loginDate">
+    </div>
+    <div id="ownersName">
+
+    </div>
+    <div id="disp">
+        <h3>Account number</h3>
+    </div>
+    <div>
+        <h3>Account Balance</h3>
+        <div id="accountBalance"></div>
+    </div>
+    <div>
+        <button onclick="deposit()">Deposit</button>
+    </div>
+    <div id="display"></div>
+   
+    <footer id="footer">
+        <section>
+            <hr>
+            <button onclick="home()">Home</button>
+            <button onclick="pay()">pay</button>
+            <button>Invest</button>
+            <button>Cards</button>
+            <button>More</button>
+        </section>
+    </footer>
+    </section>
+    <main>
+        <div id="displayContent">
+
+        </div>
+    </main>
+    
+   
+    
+   
+    <script>
+        const welcome= () =>{
+            const date = new Date()
+                    let day =date.getDate()
+                    let month = date.getMonth()+1
+                    let timeSec = date.getSeconds()
+                    let minute = date.getMinutes()
+                    let hour = date.getHours()
+                    let year =date.getFullYear()
+            loginDate.innerHTML =`<h5>Date: ${year}-${month}-${day}</h5>
+                                <h5>Time: ${hour} : ${minute} : ${timeSec}</h5>`
+
+        let userAccNumber= JSON.parse(localStorage.getItem(`ourBankUsers`))
+        let currentUserIndex= localStorage.getItem(`currentUserIndex`)
+        console.log(userAccNumber[currentUserIndex].acountNumber)
+        disp.innerHTML = `<h4>${userAccNumber[currentUserIndex].acountNumber}</h4>`
+
+        let userFirstName = JSON.parse(localStorage.getItem(`ourBankUsers`)) 
+        console.log(userFirstName[currentUserIndex].firstName)
+        ownersName.innerHTML = `<h2>${userFirstName[currentUserIndex].firstName}</h2>`
+
+        let accountBal = JSON.parse(localStorage.getItem(`ourBankUsers`))
+        accountBalance.innerHTML=`<h4>${accountBal[currentUserIndex].banlance}</h4>`
+
+        }
+        
+        
+        const saveMoney=()=>{
+            display.innerHTML=`<input type="number" placeholder="INPUT AMOUNT" id="amount">
+            <button onclick="enter()">Enter</button>`
+        }
+
+        const enter=(currentUserIndex)=>{
+            let newAmount = amount.value
+            let oldAmount = JSON.parse(localStorage.getItem(`ourBankUsers`))
+            let userIndex= localStorage.getItem(`currentUserIndex`)
+           let deposit = Number (newAmount) + Number(oldAmount[userIndex].banlance)
+            console.log(deposit)
+            accountBalance.innerHTML=``
+            accountBalance.innerHTML +=`<h4>#${deposit}</h4>`
+            localStorage.setItem(`bankDeposit`, JSON.stringify(deposit))
+        }
+
+        let transactionHistory =[]
+        // const pay=()=>{
+        //     displayContent.innerHTML =`
+        //         <button onclick="transfer()">Transfer</button>
+        //         <button onclick="deposit()">Deposit</button>
+        //         <button onclick="payUtilities()">Pay Utilities</button>
+        //         <button onclick="buyAirtime()">Buy Airtime</button>` 
+        // }
+
+        const transfer =()=>{
+            displayContent.innerHTML=`
+                <input type="text" placeholder="Account Number" id="accountNumb">
+                <input type="text" placeholder="Amount" id="Amount">
+                <button onclick="proceed()">Proceed </button>`
+        }
+        const pay = () => {
+        displayContent.innerHTML = `
+         <a href="./sendToBank.html">Send To Bank</a>
+    <a href="">Send to @username</a>
+    <p>Pay Bills</p>
+    <a href="" style="color:rgb(64,25,109); ">Buy Airtime</a>
+    <a href="">Pay a Bill</a>
+    <a href="">Gift Cards</a>
+    <a href="">Cardless Payment</a>
+    <a href="">Shelduled payment</a>`
+    }
+        
+        
+    </script> 
+</body>
+</html>
